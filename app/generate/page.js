@@ -27,7 +27,7 @@ const Generate = () => {
         setLinks(links.concat([{link:"",linktext:""}]))
      }
 
-    const submitLinks = async (text, links,handle) => {
+    const submitLinks = async () => {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -48,6 +48,9 @@ const Generate = () => {
         const result = await r.json()
         if(result.success){
             toast.success(result.message)
+            setLinks([{link:"",linktext:""}])
+            setpic("")
+            sethandle("")
             
         }
         else{
@@ -73,8 +76,8 @@ const Generate = () => {
                         <h2 className='font-semibold text-2xl'>Step 2: Add Links</h2>
                         {links&&links.map((item,index)=>{
                             return <div key={index} className=" mt-2 flex gap-2">
-                            <input value={item.link||""} onChange={e=>{handleChange(index,e.target.value,item.linktext)}} className='bg-white px-4 py-2 focus:outline-pink-500 rounded-full' type="text" placeholder='Enter link' />
                             <input value={item.linktext||""} onChange={e=>{handleChange(index,item.link,e.target.value)}} className='bg-white px-4 py-2 focus:outline-pink-500 rounded-full' type="text" placeholder='Enter link text' />
+                            <input value={item.link||""} onChange={e=>{handleChange(index,e.target.value,item.linktext)}} className='bg-white px-4 py-2 focus:outline-pink-500 rounded-full' type="text" placeholder='Enter link' />
                         </div>
                         })}
                             <button onClick={()=>addLink()} className='cursor-pointer p-5 py-2 mx-2 bg-slate-900 text-white font-bold rounded-3xl'>Add Link</button>
