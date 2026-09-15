@@ -9,6 +9,7 @@ const Generate = () => {
     const [links, setLinks] = useState([{link:"",linktext:""}])
     const [handle, sethandle] = useState("")
     const [pic, setpic] = useState("")
+    const [desc, setdesc] = useState("")
     
     const handleChange = (index,link,linktext) => { 
         setLinks((initialLinks)=>{
@@ -34,7 +35,8 @@ const Generate = () => {
         const raw = JSON.stringify({
             "links": links,
             "handle": handle,
-            "pic":pic
+            "pic":pic,
+            "desc":desc
         });
 
         const requestOptions = {
@@ -51,7 +53,7 @@ const Generate = () => {
             setLinks([{link:"",linktext:""}])
             setpic("")
             sethandle("")
-            
+            setdesc("")   
         }
         else{
             toast.error(result.message)
@@ -63,7 +65,7 @@ const Generate = () => {
     return (
         <div className='bg-[#d5a334] min-h-screen grid grid-cols-2'>
             
-            <div className="col1 flex items-center justify-center flex-col text-gray-900">
+            <div className="col1 pt-10  mt-20 flex items-center justify-center flex-col text-gray-900">
                 <div className='flex flex-col gap-5 my-8'>
                     <h1 className='font-bold text-4xl'>Create your BitTree</h1>
                     <div className="item ">
@@ -80,12 +82,13 @@ const Generate = () => {
                             <input value={item.link||""} onChange={e=>{handleChange(index,e.target.value,item.linktext)}} className='bg-white px-4 py-2 focus:outline-pink-500 rounded-full' type="text" placeholder='Enter link' />
                         </div>
                         })}
-                            <button onClick={()=>addLink()} className='cursor-pointer p-5 py-2 mx-2 bg-slate-900 text-white font-bold rounded-3xl'>Add Link</button>
+                            <button onClick={()=>addLink()} className='cursor-pointer p-5 py-2 mx-2 my-2 bg-slate-900 text-white font-bold rounded-3xl'>Add Link</button>
                     </div>
                     <div className="item">
-                        <h2 className='font-semibold text-2xl'>Step 3: Add Picture and Finalize</h2>
-                        <div className=' mt-2 flex flex-col'>
+                        <h2 className='font-semibold text-2xl'>Step 3: Add Picture and Description</h2>
+                        <div className=' mt-2 flex flex-col gap-2'>
                             <input value={pic||""} onChange={e=>{setpic(e.target.value)}} className='bg-white px-4 py-2 focus:outline-pink-500 rounded-full' type="text" placeholder='Enter link to your Picture' />
+                            <input value={desc||""} onChange={e=>{setdesc(e.target.value)}} className='bg-white px-4 py-2 focus:outline-pink-500 rounded-full' type="text" placeholder='Enter Description' />
                             <button disabled={pic==""||handle==""||links[0].linktext==""} onClick={()=>{submitLinks()}} className=' cursor-pointer disabled:bg-slate-500 p-5 py-2 w-fit my-5 bg-slate-900 text-white font-bold rounded-3xl'>Create your BitTree</button>
                         </div>
                     </div>
